@@ -1,0 +1,19 @@
+#!/usr/bin/env php
+<?php
+
+$config = [
+    'MAGENTO_CLOUD_ROUTES' => base64_encode(json_encode(
+        [
+            'http://'.$_ENV['PROJECT_DOMAIN'].'/' => [
+                'type'         => 'upstream',
+                'original_url' => '',
+            ],
+            'https://'.$_ENV['PROJECT_DOMAIN'].'/' => [
+                'type'         => 'upstream',
+                'original_url' => '',
+            ],
+        ]
+    )),
+];
+
+echo $config['MAGENTO_CLOUD_ROUTES'];

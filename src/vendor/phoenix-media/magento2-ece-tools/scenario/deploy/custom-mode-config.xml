@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:ece-tools:config/scenario.xsd">
+    <step name="pre-deploy" type="Magento\MagentoCloud\Step\Deploy\PreDeploy" priority="200">
+        <arguments>
+            <argument name="logger" xsi:type="object">Psr\Log\LoggerInterface</argument>
+            <argument name="steps" xsi:type="array">
+                <item name="clean-redis-cache" xsi:type="object" skip="true"/>
+            </argument>
+        </arguments>
+    </step>
+    <step name="enable-maintenance-mode" skip="true" />
+    <step name="disable-google-analytics" skip="true"/>
+    <step name="deploy-complete" type="Magento\MagentoCloud\Step\Deploy\DeployCompletion" priority="1200">
+        <arguments>
+            <argument name="logger" xsi:type="object">Psr\Log\LoggerInterface</argument>
+            <argument name="hook-checker" xsi:type="object">Magento\MagentoCloud\Config\Application\HookChecker</argument>
+            <argument name="steps" xsi:type="array">
+                <item name="backup" xsi:type="object" skip="true" />
+                <item name="clean-cache" xsi:type="object" skip="true" />
+            </argument>
+        </arguments>
+    </step>
+    <step name="disable-maintenance-mode" skip="true" />
+</scenario>
