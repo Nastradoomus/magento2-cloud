@@ -3,7 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Magento\Framework\Interception;
 
@@ -162,7 +162,7 @@ class PluginListGenerator implements ConfigWriterInterface, ConfigLoaderInterfac
                     $this->loadedScopes,
                     $this->pluginData,
                     $this->inherited,
-                    $this->processed
+                    $this->processed,
                 ] = $this->loadScopedVirtualTypes(
                     $this->scopePriorityScheme,
                     $this->loadedScopes,
@@ -411,7 +411,7 @@ class PluginListGenerator implements ConfigWriterInterface, ConfigLoaderInterfac
         $this->initialize();
         $configuration = sprintf('<?php return %s;', var_export($config, true));
         file_put_contents(
-            $this->directoryList->getPath(DirectoryList::GENERATED_METADATA) . '/' . $key  . '.php',
+            $this->directoryList->getPath(DirectoryList::GENERATED_METADATA) . '/' . str_replace('|', '_', $key) . '.php',
             $configuration
         );
     }

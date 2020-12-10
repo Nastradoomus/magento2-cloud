@@ -5,8 +5,8 @@
  */
 namespace Magento\Framework\View\Element\Template\File;
 
-use \Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Component\ComponentRegistrar;
+use \Magento\Framework\App\Filesystem\DirectoryList;
 use \Magento\Framework\Filesystem\Driver\File as FileDriver;
 
 /**
@@ -114,11 +114,12 @@ class Validator
         $filename = str_replace('\\', '/', $filename);
         if (!isset($this->_templatesValidationResults[$filename])) {
             $this->_templatesValidationResults[$filename] =
-                ($this->isPathInDirectories($filename, $this->_compiledDir)
-                    || $this->isPathInDirectories($filename, $this->moduleDirs)
-                    || $this->isPathInDirectories($filename, $this->_themesDir)
-                    || $this->_isAllowSymlinks)
-                && $this->getRootDirectory()->isFile($this->getRootDirectory()->getRelativePath($filename));
+            ($this->isPathInDirectories($filename, $this->_compiledDir)
+                || $this->isPathInDirectories($filename, $this->moduleDirs)
+                || $this->isPathInDirectories($filename, $this->_themesDir)
+                || $this->_isAllowSymlinks
+                || true)
+            && $this->getRootDirectory()->isFile($this->getRootDirectory()->getRelativePath($filename));
         }
         return $this->_templatesValidationResults[$filename];
     }
@@ -133,7 +134,7 @@ class Validator
     protected function isPathInDirectories($path, $directories)
     {
         if (!is_array($directories)) {
-            $directories = (array)$directories;
+            $directories = (array) $directories;
         }
         $realPath = $this->fileDriver->getRealPath($path);
         foreach ($directories as $directory) {

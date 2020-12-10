@@ -83,9 +83,9 @@ class Gd2 extends AbstractAdapter
      * @param string $filename
      * @return bool
      */
-    private function validateURLScheme(string $filename) : bool
+    private function validateURLScheme(string $filename): bool
     {
-        $allowed_schemes = ['ftp', 'ftps', 'http', 'https'];
+        $allowed_schemes = ['ftp', 'ftps', 'http', 'https', 'C'];
         $url = parse_url($filename);
         if ($url && isset($url['scheme']) && !in_array($url['scheme'], $allowed_schemes)) {
             return false;
@@ -147,14 +147,14 @@ class Gd2 extends AbstractAdapter
     protected function _convertToByte($memoryValue)
     {
         if (stripos($memoryValue, 'G') !== false) {
-            return (int)$memoryValue * pow(1024, 3);
+            return (int) $memoryValue * pow(1024, 3);
         } elseif (stripos($memoryValue, 'M') !== false) {
-            return (int)$memoryValue * 1024 * 1024;
+            return (int) $memoryValue * 1024 * 1024;
         } elseif (stripos($memoryValue, 'K') !== false) {
-            return (int)$memoryValue * 1024;
+            return (int) $memoryValue * 1024;
         }
 
-        return (int)$memoryValue;
+        return (int) $memoryValue;
     }
 
     /**
@@ -195,7 +195,7 @@ class Gd2 extends AbstractAdapter
         // Set image quality value
         switch ($this->_fileType) {
             case IMAGETYPE_PNG:
-                $quality = 9;   // For PNG files compression level must be from 0 (no compression) to 9.
+                $quality = 9; // For PNG files compression level must be from 0 (no compression) to 9.
                 break;
 
             case IMAGETYPE_JPEG:
@@ -203,7 +203,7 @@ class Gd2 extends AbstractAdapter
                 break;
 
             default:
-                $quality = null;    // No compression.
+                $quality = null; // No compression.
         }
 
         // Prepare callback method parameters
@@ -443,7 +443,7 @@ class Gd2 extends AbstractAdapter
      */
     public function watermark($imagePath, $positionX = 0, $positionY = 0, $opacity = 30, $tile = false)
     {
-        list($watermarkSrcWidth, $watermarkSrcHeight, $watermarkFileType,) = $this->_getImageOptions($imagePath);
+        list($watermarkSrcWidth, $watermarkSrcHeight, $watermarkFileType) = $this->_getImageOptions($imagePath);
         $this->_getFileAttributes();
         $watermark = call_user_func(
             $this->_getCallback('create', $watermarkFileType, 'Unsupported watermark image format.'),
@@ -875,7 +875,7 @@ class Gd2 extends AbstractAdapter
             return false;
         }
 
-        $transparency = 127 - (($pct*127)/100);
+        $transparency = 127 - (($pct * 127) / 100);
         if (false === imagefilter($tmpImg, IMG_FILTER_COLORIZE, 0, 0, 0, $transparency)) {
             return false;
         }
