@@ -3,7 +3,7 @@ FROM phoenixmedia/nginx-php:7.4
 COPY /docker/conf/php/php.ini /etc/php7/php.ini
 COPY --chown=nginx:nginx src/ /var/www/html/
 
-#RUN su -s /bin/bash nginx -c "/var/www/html/vendor/bin/ece-tools build:generate" && rm -Rf /var/www/html/var/view_preprocessed
+RUN su -s /bin/bash nginx -c "/var/www/html/vendor/bin/ece-tools build:generate" && rm -Rf /var/www/html/var/view_preprocessed
 
 COPY /docker/conf/nginx/default.conf /etc/nginx/conf.d/default.conf
 COPY /docker/conf/nginx/header_params /etc/nginx/header_params
